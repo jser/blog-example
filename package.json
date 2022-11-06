@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "book-review",
+  "version": "1.0.0",
+  "description": "GitHub Releases as a blog",
+  "main": "index.js",
+  "author": "azu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/azu/book-review/issues"
+  }
+}

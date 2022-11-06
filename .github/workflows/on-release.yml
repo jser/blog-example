@@ -1,0 +1,31 @@
+name: On Release
+
+on:
+  release:
+    types: [released]
+permissions:
+  issues: write
+  contents: read
+jobs:
+  on_release:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.release.draft == false && github.event.changes.name.from != 'Draft' }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+          cache-dependency-path: 'actions/create-draft/yarn.lock'
+      - name: Create Draft
+        run: |
+          yarn install
+          yarn run on-release
+        working-directory: actions/create-draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}
+          RELEASED_TAG_NAME: ${{ github.event.release.tag_name }}
+          RELEASED_LABEL: "Status: Released"
