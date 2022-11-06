@@ -7,7 +7,7 @@ import type { Issue } from "./create-draft";
 export const template = (issues: Issue[]): string => {
     return issues.map(issue => {
         return `# ${issue.title} by @${issue.author.login} #${issue.number}
-> ${issue.labels.nodes.filter(node => !node.name.startsWith("Status:")).map(node => `<span style="color: ${node.color}">${node.name}</span>`).join(", ")}
+> ${issue.labels.nodes.filter(node => node.name.startsWith("Tag:")).map(node => `<span style="color: ${node.color}">${node.name.replace(/Tag:\s*/,"")}</span>`).join(", ")}
 
 ${issue.body}    
 `.trimEnd();
